@@ -69,41 +69,28 @@ public class LogIn extends HttpServlet {
 				e.printStackTrace();
 			}
 	}
-	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		String user = request.getParameter("user");
-		String pass = request.getParameter("pass");
+		String user = request.getParameter("keyuser");
+		String pass = request.getParameter("keypass");
 		byte[] passwordbytes = pass.getBytes();
 		hashed = getHash(passwordbytes, "SHA-256");
-		String sql="Select username,email,password from Register where username ='"+user+"' or email = '"+user+"'  and password= '"+hashed+"' ";
+		String sql="Select username,email,password from Register where username ='"+user+"' or email = '"+user+"'  and password= '"+hashed+"' LIMIT 1";
 		
 		try {
 			ResultSet rs = stmt.executeQuery(sql);
 			
-		while(rs.next())
+		if(rs.next())
 		{
-			String u = rs.getString(1);
-			
-			String e = rs.getString(2);
-			
-			String p = rs.getString(3);
-			
-			if((user.equals(u)) && (hashed.equals(p))  ) 
-			{
-				out.println("log in succesful");
-			}
-			else if( (user.equals(e)) && (hashed.equals(p))   )   
-			{
-				out.println("succesful");
-			}
-			else 
-			{
-				out.println("wrong input");
-			}
+			out.println("Logged In");
+		}
+		else
+		{
+			out.println("Invalid Creds");
 		}
 			
 			
