@@ -92,11 +92,15 @@ public class LogIn extends HttpServlet {
 			
 			String p = rs.getString(3);
 			
-			if(  (user.equals(u)) && (hashed.equals(p))  ) 
+			if((user.equals(u)) && (hashed.equals(p))  ) 
 			{
 				out.println("log in succesful");
 			}
-			else
+			else if( (user.equals(e)) && (hashed.equals(p))   )   
+			{
+				out.println("succesful");
+			}
+			else 
 			{
 				out.println("wrong input");
 			}
