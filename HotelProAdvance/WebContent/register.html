@@ -25,6 +25,7 @@
 
     <!-- MAIN STYLE -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
     
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -225,22 +226,31 @@
                 <div class="login-register">
                     <div class="text text-center">
                         <h2>REGISTER FORM</h2>
-                        <p>If you no have account in lotus Hotel! Register and feeling</p>
-                        <form action="#" class="account_form">
-                            <div class="field-form">
-                                <input type="text" class="field-text" placeholder="User name*">
+                        <p>If you no have account in Paradise Hotel! Register and feeling</p>
+                        <div class="account_form">
+                         <div class="field-form">
+                                <input type="text" name="fname" id="fname" placeholder="First Name*" size="26" >&nbsp;
+								<input type="text" name="lname" id="lname" placeholder="Last Name*" size="26">
                             </div>
                             <div class="field-form">
-                                <input type="text" class="field-text" placeholder="Email*">
+                                <input type="text" class="field-text" id="user" name="username" placeholder="User name*">
                             </div>
                             <div class="field-form">
-                                <input type="password" class="field-text" placeholder="Password*">
+                                <input type="text" class="field-text" id="email" name="email" placeholder="Email*">
+                            </div>
+                            <div class="field-form">
+                                <input type="password" class="field-text" id="pass" name="password" placeholder="Password*">
+                                <span class="view-pass"><i class="lotus-icon-view"></i></span>
+                            </div>
+                             <div class="field-form">
+                                <input type="password" class="field-text" id="cpass" name="cpassword" placeholder="Confirm Password*">
                                 <span class="view-pass"><i class="lotus-icon-view"></i></span>
                             </div>
                             <div class="field-form field-submit">
-                                <button class="awe-btn awe-btn-13">REGISTER</button>
+                                <button class="awe-btn awe-btn-13" type="submit" onclick="jquery()">REGISTER</button>
                             </div>
-                        </form>
+                            <span id="showMsg"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -369,9 +379,11 @@
     </div>
     <!-- END / PAGE WRAP -->
 
-
+ 	<!-- JS -->
+    
+	
     <!-- LOAD JQUERY -->
-    <script type="text/javascript" src="js/lib/jquery-1.11.0.min.js"></script>
+     <script type="text/javascript" src="js/lib/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/lib/bootstrap-select.js"></script>
@@ -387,5 +399,43 @@
     <script type="text/javascript" src="js/lib/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript" src="js/lib/SmoothScroll.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
+    
+    
+    
+    
+    
+     <script type="text/javascript">
+    
+    function jquery()
+    {
+    	var FirstName =$('#fname').val();
+    	var LastName =$('#lname').val();
+    	var Username =$('#user').val();
+    	var E_Mail =$('#email').val();
+    	var Password =$('#pass').val();
+    	var Cpassword =$('#cpass').val();
+    	
+    	$.ajax({
+    		type:'POST',
+    		url:'Register',
+    		data:{Fname:FirstName,Lname:LastName,User:Username,Email:E_Mail,Pass:Password,Cpass:Cpassword},
+    		success:function(result)
+    		{
+    			$('#showMsg').html(result);
+    			$('#fname').val("");
+    			$('#lname').val("");
+    			$('#user').val("");
+    			$('#email').val("");
+    			$('#pass').val("");
+    			$('#cpass').val("");
+    		}
+    	});
+    	
+    }
+    
+    
+    </script>
+    
+   
 </body>
 </html>
