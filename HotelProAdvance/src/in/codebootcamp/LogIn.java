@@ -25,7 +25,6 @@ import javax.xml.datatype.DatatypeConstants;
 @WebServlet("/LogIn")
 public class LogIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String hashedpassword="";
 	private Statement stmt;
 	private Connection con;
 	private String hashed;
@@ -79,22 +78,32 @@ public class LogIn extends HttpServlet {
 		String pass = request.getParameter("keypass");
 		byte[] passwordbytes = pass.getBytes();
 		hashed = getHash(passwordbytes, "SHA-256");
-		String sql="Select username,email,password from Register where username ='"+user+"' or email = '"+user+"'  and password= '"+hashed+"' LIMIT 1";
+		String sql="Select user_name,email,password from Register where user_name ='"+user+"' or email = '"+user+"'  and password= '"+hashed+"' LIMIT 1";
 		
 		try {
 			ResultSet rs = stmt.executeQuery(sql);
 			
 		if(rs.next())
 		{
-			out.println("Logged In");
-		}
+			String password = rs.getString(3);
+				if(hashed.equals(password))
+				{
+					out.println("Logged In");
+				}
+				else
+				{
+					out.println("Invalid Creds");
+				}
+			
+		}	
 		else
 		{
-			out.println("Invalid Creds");
+			out.println("username does not match");
 		}
-			
-			
-		} catch (SQLException e) {
+		} 
+		
+		catch (SQLException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
